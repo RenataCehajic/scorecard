@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Player from "../Player/Player";
 import "./Scoreboard.scss";
+import AddPlayerForm from "../AddPlayerForm";
 
 function compare_score(player_a, player_b) {
   return player_b.score - player_a.score;
@@ -64,11 +65,20 @@ export default function Scoreboard() {
     const randomized_scores = players.map((player) => {
       return {
         ...player,
-        score: Math.floor(Math.random() * 101),
+        score: Math.floor(Math.random() * 100),
       };
     });
     set_players(randomized_scores);
   };
+
+  const addPlayer = (name) => {
+    const new_player_added = [
+      ...players,
+      { id: players.length + 1, name, score: 0 },
+    ];
+    set_players(new_player_added);
+  };
+
   return (
     <div className="Scoreboard">
       <p>
@@ -90,7 +100,7 @@ export default function Scoreboard() {
           incrementScore={incrementScore}
         />
       ))}
-      <p>[TODO: add player form]</p>
+      <AddPlayerForm addPlayer={addPlayer} />
     </div>
   );
 }
